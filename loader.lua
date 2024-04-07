@@ -28,7 +28,7 @@ if game.GameId == 113491250 then -- CREDITS TO iray888 (896378803868295178) @ th
         end
     end)
 
-    run_on_actor(getactors()[1], game:HttpGet(games[game.GameId]), newID)
+    run_on_actor(getactors()[1], `script_key="{script_key}"`..game:HttpGet(games[game.GameId]), newID)
     return
 end
 
