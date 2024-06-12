@@ -9,15 +9,7 @@ local games = is_solara and {
 }
 
 if is_solara then
-    if not games[game.GameId] then
-        game:GetService("Players").LocalPlayer:Kick("juju.lol > Solara does not support this game!")
-        return 
-    end
-
     getgenv().script_key = script_key
-    
-    loadstring(game:HttpGet(games[game.GameId]))()
-    return
 end
 
-loadstring(game:HttpGet(games[game.GameId] or "https://api.luarmor.net/files/v3/loaders/e7b8ab8480015787078f991bc7523cb6.lua"))()
+loadstring(game:HttpGet(games[game.GameId] or (is_solara and "https://api.luarmor.net/files/v3/loaders/f79bffe032786cfcb99f73b8f35cb13f.lua" or "https://api.luarmor.net/files/v3/loaders/e7b8ab8480015787078f991bc7523cb6.lua"))()
