@@ -13,7 +13,7 @@
 # Supported Games
 - Da Hood
 > This includes Da Hood copies/remakes (yes, including Hood Customs with anti aim viewer and anticheat bypass etc)
-> We also offer a streamable Da Hood script featuring a customizable table, peep it @ https://raw.githubusercontent.com/jujudotlol/neverlogdotcc/main/table.lua
+> - We also offer a streamable Da Hood script featuring a customizable table, peep it @ https://raw.githubusercontent.com/jujudotlol/neverlogdotcc/main/table.lua
 - Murderers VS Sheriffs Duels
 - Phantom Forces
 > As of 6/23/2024, it is currently considered abandoned as there is no executor to continue working on it.
