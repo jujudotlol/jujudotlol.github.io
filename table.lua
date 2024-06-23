@@ -346,7 +346,7 @@ Settings = {
             TextSize = 14,
             Watermark = {
                 Color = Color3.fromRGB(166, 213, 227),
-                Text = "neverlog.cc",
+                Text = "juju.lol",
                 Enabled = true,
             },
             VelocityBar = {
