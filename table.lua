@@ -327,6 +327,7 @@ Settings = {
         },
         DisableWhenTargetHasForcefield = true,
         DisableWhenNotHoldingGun = true,
+        DisableWhenGunHasNoAmmo = true,
         DisableWhenTyping = true,
         Enabled = false
     },
