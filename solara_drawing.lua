@@ -32,7 +32,7 @@ local baseDrawingObj = setmetatable({
 })
 local drawingFontsEnum = {
 	[0] = Font.fromEnum(Enum.Font.Roboto),
-	[1] = Font.fromEnum(Enum.Font.Legacy),
+	[1] = Font.fromEnum(Enum.Font.SourceSansSemibold),
 	[2] = Font.fromEnum(Enum.Font.SourceSans),
 	[3] = Font.fromEnum(Enum.Font.RobotoMono),
 }
