@@ -575,7 +575,9 @@ LPH_NO_VIRTUALIZE(function()
             self.__OBJECT._STROKE.Enabled = not value
             self.__OBJECT.BackgroundTransparency = value and 1 - Properties.Transparency or 1
         elseif property == "Transparency" then
-            self.__OBJECT.Transparency = math.clamp(1 - value, 0, 1)
+            local value = -value + 1
+            self.__OBJECT.Transparency = Properties.Filled and value or 1
+            self.__OBJECT._STROKE.Transparency = value
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
