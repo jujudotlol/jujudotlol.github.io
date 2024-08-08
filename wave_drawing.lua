@@ -480,7 +480,7 @@ LPH_NO_VIRTUALIZE(function()
             local value = math.clamp(1 - value, 0, 1)
             local object = self.__OBJECT
             object.Transparency = value
-            object.TextStrokeTransparency = value
+            object.__STROKE.Transparency = value
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
@@ -552,10 +552,6 @@ LPH_NO_VIRTUALIZE(function()
                     Color = Color3.new(0, 0, 0),
                     LineJoinMode = Enum.LineJoinMode.Miter,
                     Thickness = 1
-                }),
-                Drawing.CreateInstance("UICorner", {
-                    Name = "_CORNER",
-                    CornerRadius = UDim.new(0, 0)
                 })
             })
         }, Square)
@@ -595,8 +591,6 @@ LPH_NO_VIRTUALIZE(function()
             self.__OBJECT._STROKE.Thickness = value
             self.__OBJECT._STROKE.Enabled = not Properties.Filled
             self:__UPDATE_SCALE()
-        elseif property == "Rounding" then
-            self.__OBJECT._CORNER.CornerRadius = UDim.new(0, value)
         elseif property == "Filled" then
             self.__OBJECT._STROKE.Enabled = not value
             self.__OBJECT.BackgroundTransparency = value and 1 - Properties.Transparency or 1
@@ -620,8 +614,8 @@ LPH_NO_VIRTUALIZE(function()
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
 
-        self.__OBJECT.Position = UDim2.fromOffset(Properties.Position.X + Properties.Thickness, Properties.Position.Y + Properties.Thickness)
-        self.__OBJECT.Size = UDim2.fromOffset(Properties.Size.X - Properties.Thickness * 2, Properties.Size.Y - Properties.Thickness * 2)
+        self.__OBJECT.Position = UDim2.fromOffset(Properties.Position.X - Properties.Thickness, Properties.Position.Y - Properties.Thickness)
+        self.__OBJECT.Size = UDim2.fromOffset(Properties.Size.X + Properties.Thickness * 2, Properties.Size.Y + Properties.Thickness * 2)
     end
 
     function Square:Remove()
