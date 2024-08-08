@@ -480,7 +480,7 @@ LPH_NO_VIRTUALIZE(function()
             local value = math.clamp(1 - value, 0, 1)
             local object = self.__OBJECT
             object.Transparency = value
-            object.__STROKE.Transparency = value
+            object._STROKE.Transparency = value
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
@@ -614,8 +614,8 @@ LPH_NO_VIRTUALIZE(function()
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
 
-        self.__OBJECT.Position = UDim2.fromOffset(Properties.Position.X - Properties.Thickness, Properties.Position.Y - Properties.Thickness)
-        self.__OBJECT.Size = UDim2.fromOffset(Properties.Size.X + Properties.Thickness * 2, Properties.Size.Y + Properties.Thickness * 2)
+        self.__OBJECT.Position = UDim2.fromOffset(Properties.Position.X, Properties.Position.Y)
+        self.__OBJECT.Size = UDim2.fromOffset(Properties.Size.X, Properties.Size.Y)
     end
 
     function Square:Remove()
