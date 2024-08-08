@@ -571,8 +571,6 @@ LPH_NO_VIRTUALIZE(function()
             self.__OBJECT._STROKE.Thickness = value
             self.__OBJECT._STROKE.Enabled = not Properties.Filled
             self:__UPDATE_SCALE()
-        elseif property == "Rounding" then
-            self.__OBJECT._CORNER.CornerRadius = UDim.new(0, value)
         elseif property == "Filled" then
             self.__OBJECT._STROKE.Enabled = not value
             self.__OBJECT.BackgroundTransparency = value and 1 - Properties.Transparency or 1
@@ -595,11 +593,9 @@ LPH_NO_VIRTUALIZE(function()
 
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
-        local Thickness = Properties.Thickness or 1
-        local Scale = floor(Thickness/2)
 
-        self.__OBJECT.Position = fromOffset(Properties.Position.X + Scale, Properties.Position.Y + Scale)
-        self.__OBJECT.Size = fromOffset(Properties.Size.X - Thickness, Properties.Size.Y - Thickness)
+        self.__OBJECT.Position = fromOffset(Properties.Position.X + Properties.Thickness, Properties.Position.Y + Properties.Thickness)
+        self.__OBJECT.Size = fromOffset(Properties.Size.X - Properties.Thickness * 2, Properties.Size.Y - Properties.Thickness * 2)
     end
 
     function Square:Remove()
