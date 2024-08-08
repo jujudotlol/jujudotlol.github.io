@@ -596,7 +596,7 @@ LPH_NO_VIRTUALIZE(function()
 
         local Scale = floor(Properties.Thickness/2)
 
-        self.__OBJECT.Position = fromOffset(Properties.Position.X + scale, Properties.Position.Y + scale)
+        self.__OBJECT.Position = fromOffset(Properties.Position.X + Scale, Properties.Position.Y + Scale)
         self.__OBJECT.Size = fromOffset(Properties.Size.X, Properties.Size.Y)
     end
 
