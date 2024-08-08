@@ -8,17 +8,6 @@ if not LPH_OBFUSCATED then
 end
 
 LPH_NO_VIRTUALIZE(function()
-
-    assert(getcustomasset, "This enviornment does not support 'getcustomasset'!")
-    assert(gethui, "This enviornment does not support 'gethui'!")
-    assert(isfolder, "This enviornment does not support 'isfolder'!")
-    assert(makefolder, "This enviornment does not support 'makefolder'!")
-    assert(isfile, "This enviornment does not support 'isfile'!")
-    assert(delfile, "This enviornment does not support 'delfile'!")
-    assert(readfile, "This enviornment does not support 'readfile'!")
-    assert(writefile, "This enviornment does not support 'writefile'!")
-    assert(crypt, "This enviornment does not support 'crypt'!")
-
     if cleardrawcache then
         cleardrawcache()
     end
@@ -34,34 +23,25 @@ LPH_NO_VIRTUALIZE(function()
     local HttpGet = clonefunction(game.HttpGet)
     local GetTextBoundsAsync = clonefunction(TextService.GetTextBoundsAsync)
 
-    local math = {
-        atan2 = clonefunction(math.atan2),
-        clamp = clonefunction(math.clamp),
-        max = clonefunction(math.max),
-        min = clonefunction(math.min),
-        pi = math.pi,
-        huge = math.huge
-    }
+    local floor = clonefunction(math.floor)
+    local atan2 = clonefunction(math.atan2)
+    local clamp = clonefunction(math.clamp)
+    local max = clonefunction(math.max)
+    local huge = math.huge
+    local pi = math.pi
 
     local string = {
         format = clonefunction(string.format),
         sub = clonefunction(string.sub)
     }
 
-    local UDim2 = {
-        new = clonefunction(UDim2.new),
-        fromOffset = clonefunction(UDim2.fromOffset),
-        fromScale = clonefunction(UDim2.fromScale)
-    }
+    local udim2New = clonefunction(UDim2.new)
+    local fromOffset = clonefunction(UDim2.fromOffset)
 
-    local Vector2 = {
-        new = clonefunction(Vector2.new),
-        zero = Vector2.zero
-    }
+    local vector2New = clonefunction(Vector2.new)
+    local vectorZero = Vector2.zero
 
-    local Color3 = {
-        new = clonefunction(Color3.new),
-    }
+    local color3New = clonefunction(Color3.new)
 
     -- // Drawing
     local Drawing = {}
@@ -126,7 +106,7 @@ LPH_NO_VIRTUALIZE(function()
         Drawing.__TEXT_BOUND_PARAMS.Text = "Text"
         Drawing.__TEXT_BOUND_PARAMS.Size = 12
         Drawing.__TEXT_BOUND_PARAMS.Font = FontObject
-        Drawing.__TEXT_BOUND_PARAMS.Width = math.huge
+        Drawing.__TEXT_BOUND_PARAMS.Width = huge
 
         GetTextBoundsAsync(TextService, Drawing.__TEXT_BOUND_PARAMS) -- Preload/Cache font for GetTextBoundsAsync to avoid yielding across metamethods
 
@@ -161,9 +141,9 @@ LPH_NO_VIRTUALIZE(function()
         local center = (from + to) / 2
         local offset = to - from
 
-        object.Position = UDim2.fromOffset(center.X, center.Y)
-        object.Size = UDim2.fromOffset(offset.Magnitude, thickness)
-        object.Rotation = math.atan2(offset.Y, offset.X) * 180 / math.pi
+        object.Position = fromOffset(center.X, center.Y)
+        object.Size = fromOffset(offset.Magnitude, thickness)
+        object.Rotation = atan2(offset.Y, offset.X) * 180 / pi
     end
 
     Drawing.__ROOT = Drawing.CreateInstance("ScreenGui", {
@@ -174,7 +154,7 @@ LPH_NO_VIRTUALIZE(function()
         Parent = gethui()
     })
 
-    Drawing.__TEXT_BOUND_PARAMS = Drawing.CreateInstance("GetTextBoundsParams", { Width = math.huge })
+    Drawing.__TEXT_BOUND_PARAMS = Drawing.CreateInstance("GetTextBoundsParams", { Width = huge })
 
     --#region Line
     local Line = {}
@@ -185,19 +165,19 @@ LPH_NO_VIRTUALIZE(function()
         local LineObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(0, 0, 0),
-                From = Vector2.zero,
-                To = Vector2.zero,
+                Color = color3New(0, 0, 0),
+                From = vectorZero,
+                To = vectorZero,
                 Thickness = 1,
                 Transparency = 1,
                 ZIndex = 0,
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("Frame", {
-                AnchorPoint = Vector2.new(0.5, 0.5),
-                BackgroundColor3 = Color3.new(0, 0, 0),
-                Position = UDim2.new(0, 0, 0, 0),
-                Size = UDim2.new(0, 0, 0, 0),
+                AnchorPoint = vector2New(0.5, 0.5),
+                BackgroundColor3 = color3New(0, 0, 0),
+                Position = udim2New(0, 0, 0, 0),
+                Size = udim2New(0, 0, 0, 0),
                 BorderSizePixel = 0,
                 ZIndex = 0,
                 Visible = false,
@@ -236,9 +216,9 @@ LPH_NO_VIRTUALIZE(function()
         elseif property == "To" then
             Drawing.UpdatePosition(self.__OBJECT, Properties.From, Properties.To, Properties.Thickness)
         elseif property == "Thickness" then
-            self.__OBJECT.Size = UDim2.fromOffset(self.__OBJECT.AbsoluteSize.X, math.max(value, 1))
+            self.__OBJECT.Size = fromOffset(self.__OBJECT.AbsoluteSize.X, max(value, 1))
         elseif property == "Transparency" then
-            self.__OBJECT.Transparency = math.clamp(1 - value, 0, 1)
+            self.__OBJECT.Transparency = clamp(1 - value, 0, 1)
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
@@ -274,8 +254,8 @@ LPH_NO_VIRTUALIZE(function()
         local CircleObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(0, 0, 0),
-                Position = Vector2.new(0, 0),
+                Color = color3New(0, 0, 0),
+                Position = vector2New(0, 0),
                 NumSides = 0,
                 Radius = 0,
                 Thickness = 1,
@@ -285,10 +265,10 @@ LPH_NO_VIRTUALIZE(function()
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("Frame", {
-                AnchorPoint = Vector2.new(0.5, 0.5),
-                BackgroundColor3 = Color3.new(0, 0, 0),
-                Position = UDim2.new(0, 0, 0, 0),
-                Size = UDim2.new(0, 0, 0, 0),
+                AnchorPoint = vector2New(0.5, 0.5),
+                BackgroundColor3 = color3New(0, 0, 0),
+                Position = udim2New(0, 0, 0, 0),
+                Size = udim2New(0, 0, 0, 0),
                 BorderSizePixel = 0,
                 BackgroundTransparency = 1,
                 ZIndex = 0,
@@ -301,7 +281,7 @@ LPH_NO_VIRTUALIZE(function()
                 }),
                 Drawing.CreateInstance("UIStroke", {
                     Name = "_STROKE",
-                    Color = Color3.new(0, 0, 0),
+                    Color = color3New(0, 0, 0),
                     Thickness = 1
                 })
             }),
@@ -337,14 +317,14 @@ LPH_NO_VIRTUALIZE(function()
         elseif property == "Filled" then
             self.__OBJECT.BackgroundTransparency = value and 1 - Properties.Transparency or 1
         elseif property == "Position" then
-            self.__OBJECT.Position = UDim2.fromOffset(value.X, value.Y)
+            self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Radius" then
             self:__UPDATE_RADIUS()
         elseif property == "Thickness" then
             self:__UPDATE_RADIUS()
         elseif property == "Transparency" then
-            self.__OBJECT._STROKE.Transparency = math.clamp(1 - value, 0, 1)
-            self.__OBJECT.Transparency = Properties.Filled and math.clamp(1 - value, 0, 1) or self.__OBJECT.Transparency
+            self.__OBJECT._STROKE.Transparency = clamp(1 - value, 0, 1)
+            self.__OBJECT.Transparency = Properties.Filled and clamp(1 - value, 0, 1) or self.__OBJECT.Transparency
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
@@ -362,7 +342,7 @@ LPH_NO_VIRTUALIZE(function()
 
     function Circle:__UPDATE_RADIUS()
         local diameter = (self.__PROPERTIES.Radius * 2) - (self.__PROPERTIES.Thickness * 2)
-        self.__OBJECT.Size = UDim2.fromOffset(diameter, diameter)
+        self.__OBJECT.Size = fromOffset(diameter, diameter)
     end
 
     function Circle:Remove()
@@ -385,10 +365,10 @@ LPH_NO_VIRTUALIZE(function()
         local TextObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(1, 1, 1),
-                OutlineColor = Color3.new(0, 0, 0),
-                Position = Vector2.new(0, 0),
-                TextBounds = Vector2.new(0, 0),
+                Color = color3New(1, 1, 1),
+                OutlineColor = color3New(0, 0, 0),
+                Position = vector2New(0, 0),
+                TextBounds = vector2New(0, 0),
                 Text = "",
                 Font = Drawing.Font.Enums[2],
                 Size = 13,
@@ -399,9 +379,9 @@ LPH_NO_VIRTUALIZE(function()
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("TextLabel", {
-                TextColor3 = Color3.new(1, 1, 1),
-                Position = UDim2.new(0, 0, 0, 0),
-                Size = UDim2.new(0, 0, 0, 0),
+                TextColor3 = color3New(1, 1, 1),
+                Position = udim2New(0, 0, 0, 0),
+                Size = udim2New(0, 0, 0, 0),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 TextYAlignment = Enum.TextYAlignment.Top,
                 FontFace = Drawing.Font.Enums[1],
@@ -413,7 +393,7 @@ LPH_NO_VIRTUALIZE(function()
             }, {
                 Drawing.CreateInstance("UIStroke", {
                     Name = "_STROKE",
-                    Color = Color3.new(0, 0, 0),
+                    Color = color3New(0, 0, 0),
                     LineJoinMode = Enum.LineJoinMode.Miter,
                     Enabled = false,
                     Thickness = 1
@@ -452,7 +432,7 @@ LPH_NO_VIRTUALIZE(function()
         if property == "Color" then
             self.__OBJECT.TextColor3 = value
         elseif property == "Position" then
-            self.__OBJECT.Position = UDim2.fromOffset(value.X, value.Y)
+            self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Size" then
             self.__OBJECT.TextSize = value - 1
             self:_UPDATE_TEXT_BOUNDS()
@@ -477,7 +457,7 @@ LPH_NO_VIRTUALIZE(function()
         elseif property == "Center" then
             self.__OBJECT.TextXAlignment = value and Enum.TextXAlignment.Center or Enum.TextXAlignment.Left
         elseif property == "Transparency" then
-            local value = math.clamp(1 - value, 0, 1)
+            local value = clamp(1 - value, 0, 1)
             local object = self.__OBJECT
             object.Transparency = value
             object._STROKE.Transparency = value
@@ -502,7 +482,7 @@ LPH_NO_VIRTUALIZE(function()
         Drawing.__TEXT_BOUND_PARAMS.Text = Properties.Text
         Drawing.__TEXT_BOUND_PARAMS.Size = Properties.Size - 1
         Drawing.__TEXT_BOUND_PARAMS.Font = Properties.Font
-        Drawing.__TEXT_BOUND_PARAMS.Width = math.huge
+        Drawing.__TEXT_BOUND_PARAMS.Width = huge
 
         Properties.TextBounds = GetTextBoundsAsync(TextService, Drawing.__TEXT_BOUND_PARAMS)
     end
@@ -527,9 +507,9 @@ LPH_NO_VIRTUALIZE(function()
         local SquareObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(0, 0, 0),
-                Position = Vector2.new(0, 0),
-                Size = Vector2.new(0, 0),
+                Color = color3New(0, 0, 0),
+                Position = vector2New(0, 0),
+                Size = vector2New(0, 0),
                 Rounding = 0,
                 Thickness = 0,
                 Transparency = 1,
@@ -538,9 +518,9 @@ LPH_NO_VIRTUALIZE(function()
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("Frame", {
-                Position = UDim2.new(0, 0, 0, 0),
-                Size = UDim2.new(0, 0, 0, 0),
-                BackgroundColor3 = Color3.new(0, 0, 0),
+                Position = udim2New(0, 0, 0, 0),
+                Size = udim2New(0, 0, 0, 0),
+                BackgroundColor3 = color3New(0, 0, 0),
                 BackgroundTransparency = 1,
                 BorderSizePixel = 0,
                 ZIndex = 0,
@@ -549,7 +529,7 @@ LPH_NO_VIRTUALIZE(function()
             }, {
                 Drawing.CreateInstance("UIStroke", {
                     Name = "_STROKE",
-                    Color = Color3.new(0, 0, 0),
+                    Color = color3New(0, 0, 0),
                     LineJoinMode = Enum.LineJoinMode.Miter,
                     Thickness = 1
                 })
@@ -595,7 +575,7 @@ LPH_NO_VIRTUALIZE(function()
             self.__OBJECT._STROKE.Enabled = not value
             self.__OBJECT.BackgroundTransparency = value and 1 - Properties.Transparency or 1
         elseif property == "Transparency" then
-            self.__OBJECT.Transparency = math.clamp(1 - value, 0, 1)
+            self.__OBJECT.Transparency = clamp(1 - value, 0, 1)
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
@@ -614,8 +594,10 @@ LPH_NO_VIRTUALIZE(function()
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
 
-        self.__OBJECT.Position = UDim2.fromOffset(Properties.Position.X, Properties.Position.Y)
-        self.__OBJECT.Size = UDim2.fromOffset(Properties.Size.X, Properties.Size.Y)
+        local Scale = floor(Properties.Thickness/2)
+
+        self.__OBJECT.Position = fromOffset(Properties.Position.X + scale, Properties.Position.Y + scale)
+        self.__OBJECT.Size = fromOffset(Properties.Size.X, Properties.Size.Y)
     end
 
     function Square:Remove()
@@ -638,9 +620,9 @@ LPH_NO_VIRTUALIZE(function()
         local ImageObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(0, 0, 0),
-                Position = Vector2.new(0, 0),
-                Size = Vector2.new(0, 0),
+                Color = color3New(0, 0, 0),
+                Position = vector2New(0, 0),
+                Size = vector2New(0, 0),
                 Data = "",
                 Uri = "",
                 Thickness = 0,
@@ -650,9 +632,9 @@ LPH_NO_VIRTUALIZE(function()
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("ImageLabel", {
-                Position = UDim2.new(0, 0, 0, 0),
-                Size = UDim2.new(0, 0, 0, 0),
-                BackgroundColor3 = Color3.new(0, 0, 0),
+                Position = udim2New(0, 0, 0, 0),
+                Size = udim2New(0, 0, 0, 0),
+                BackgroundColor3 = color3New(0, 0, 0),
                 Image = "",
                 BackgroundTransparency = 1,
                 BorderSizePixel = 0,
@@ -700,11 +682,11 @@ LPH_NO_VIRTUALIZE(function()
         elseif property == "Color" then
             self.__OBJECT.ImageColor3 = value
         elseif property == "Position" then
-            self.__OBJECT.Position = UDim2.fromOffset(value.X, value.Y)
+            self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Size" then
-            self.__OBJECT.Size = UDim2.fromOffset(value.X, value.Y)
+            self.__OBJECT.Size = fromOffset(value.X, value.Y)
         elseif property == "Transparency" then
-            self.__OBJECT.ImageTransparency = math.clamp(1 - value, 0, 1)
+            self.__OBJECT.ImageTransparency = clamp(1 - value, 0, 1)
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
@@ -759,10 +741,10 @@ LPH_NO_VIRTUALIZE(function()
         local TriangleObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(0, 0, 0),
-                PointA = Vector2.new(0, 0),
-                PointB = Vector2.new(0, 0),
-                PointC = Vector2.new(0, 0),
+                Color = color3New(0, 0, 0),
+                PointA = vector2New(0, 0),
+                PointB = vector2New(0, 0),
+                PointC = vector2New(0, 0),
                 Thickness = 1,
                 Transparency = 1,
                 ZIndex = 0,
@@ -770,7 +752,7 @@ LPH_NO_VIRTUALIZE(function()
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("Frame", {
-                Size = UDim2.new(1, 0, 1, 0),
+                Size = udim2New(1, 0, 1, 0),
                 BackgroundTransparency = 1,
                 ZIndex = 0,
                 Visible = false,
@@ -778,28 +760,28 @@ LPH_NO_VIRTUALIZE(function()
             }, {
                 Drawing.CreateInstance("Frame", {
                     Name = "_A",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 }),
                 Drawing.CreateInstance("Frame", {
                     Name = "_B",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 }),
                 Drawing.CreateInstance("Frame", {
                     Name = "_C",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 })
@@ -839,9 +821,9 @@ LPH_NO_VIRTUALIZE(function()
             Object._B.BackgroundTransparency = 1 - values
             Object._C.BackgroundTransparency = 1 - values
         elseif property == "Thickness" then
-            Object._A.BackgroundColor3 = UDim2.fromOffset(Object._A.AbsoluteSize.X, math.max(value, 1));
-            Object._B.BackgroundColor3 = UDim2.fromOffset(Object._B.AbsoluteSize.X, math.max(value, 1));
-            Object._C.BackgroundColor3 = UDim2.fromOffset(Object._C.AbsoluteSize.X, math.max(value, 1));
+            Object._A.BackgroundColor3 = fromOffset(Object._A.AbsoluteSize.X, max(value, 1));
+            Object._B.BackgroundColor3 = fromOffset(Object._B.AbsoluteSize.X, max(value, 1));
+            Object._C.BackgroundColor3 = fromOffset(Object._C.AbsoluteSize.X, max(value, 1));
         elseif property == "PointA" then
             self:__UPDATE_VERTICIES({
                 { Object._A, Properties.PointA, Properties.PointB },
@@ -900,11 +882,11 @@ LPH_NO_VIRTUALIZE(function()
         local QuadObject = setmetatable({
             __OBJECT_EXISTS = true,
             __PROPERTIES = {
-                Color = Color3.new(0, 0, 0),
-                PointA = Vector2.new(0, 0),
-                PointB = Vector2.new(0, 0),
-                PointC = Vector2.new(0, 0),
-                PointD = Vector2.new(0, 0),
+                Color = color3New(0, 0, 0),
+                PointA = vector2New(0, 0),
+                PointB = vector2New(0, 0),
+                PointC = vector2New(0, 0),
+                PointD = vector2New(0, 0),
                 Thickness = 1,
                 Transparency = 1,
                 ZIndex = 0,
@@ -912,7 +894,7 @@ LPH_NO_VIRTUALIZE(function()
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("Frame", {
-                Size = UDim2.new(1, 0, 1, 0),
+                Size = udim2New(1, 0, 1, 0),
                 BackgroundTransparency = 1,
                 ZIndex = 0,
                 Visible = false,
@@ -920,37 +902,37 @@ LPH_NO_VIRTUALIZE(function()
             }, {
                 Drawing.CreateInstance("Frame", {
                     Name = "_A",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 }),
                 Drawing.CreateInstance("Frame", {
                     Name = "_B",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 }),
                 Drawing.CreateInstance("Frame", {
                     Name = "_C",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 }),
                 Drawing.CreateInstance("Frame", {
                     Name = "_D",
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(0, 0, 0, 0),
-                    AnchorPoint = Vector2.new(0.5, 0.5),
-                    BackgroundColor3 = Color3.new(0, 0, 0),
+                    Position = udim2New(0, 0, 0, 0),
+                    Size = udim2New(0, 0, 0, 0),
+                    AnchorPoint = vector2New(0.5, 0.5),
+                    BackgroundColor3 = color3New(0, 0, 0),
                     BorderSizePixel = 0,
                     ZIndex = 0
                 })
@@ -992,10 +974,10 @@ LPH_NO_VIRTUALIZE(function()
             Object._C.BackgroundTransparency = 1 - values
             Object._D.BackgroundTransparency = 1 - values
         elseif property == "Thickness" then
-            Object._A.BackgroundColor3 = UDim2.fromOffset(Object._A.AbsoluteSize.X, math.max(value, 1));
-            Object._B.BackgroundColor3 = UDim2.fromOffset(Object._B.AbsoluteSize.X, math.max(value, 1));
-            Object._C.BackgroundColor3 = UDim2.fromOffset(Object._C.AbsoluteSize.X, math.max(value, 1));
-            Object._D.BackgroundColor3 = UDim2.fromOffset(Object._D.AbsoluteSize.X, math.max(value, 1));
+            Object._A.BackgroundColor3 = fromOffset(Object._A.AbsoluteSize.X, max(value, 1));
+            Object._B.BackgroundColor3 = fromOffset(Object._B.AbsoluteSize.X, max(value, 1));
+            Object._C.BackgroundColor3 = fromOffset(Object._C.AbsoluteSize.X, max(value, 1));
+            Object._D.BackgroundColor3 = fromOffset(Object._D.AbsoluteSize.X, max(value, 1));
         elseif property == "PointA" then
             self:__UPDATE_VERTICIES({
                 { Object._A, Properties.PointA, Properties.PointB },
