@@ -594,7 +594,7 @@ LPH_NO_VIRTUALIZE(function()
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
 
-        local Scale = floor(Properties.Thickness/2)
+        local Scale = floor((Properties.Thickness or 1)/2)
 
         self.__OBJECT.Position = fromOffset(Properties.Position.X + Scale, Properties.Position.Y + Scale)
         self.__OBJECT.Size = fromOffset(Properties.Size.X, Properties.Size.Y)
