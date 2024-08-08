@@ -526,13 +526,6 @@ LPH_NO_VIRTUALIZE(function()
                 ZIndex = 0,
                 Visible = false,
                 Parent = Drawing.__ROOT
-            }, {
-                Drawing.CreateInstance("UIStroke", {
-                    Name = "_STROKE",
-                    Color = color3New(0, 0, 0),
-                    LineJoinMode = Enum.LineJoinMode.Miter,
-                    Thickness = 1
-                })
             })
         }, Square)
 
@@ -562,17 +555,13 @@ LPH_NO_VIRTUALIZE(function()
 
         if property == "Color" then
             self.__OBJECT.BackgroundColor3 = value
-            self.__OBJECT._STROKE.Color = value
         elseif property == "Position" then
             self:__UPDATE_SCALE()
         elseif property == "Size" then
             self:__UPDATE_SCALE()
         elseif property == "Thickness" then
-            self.__OBJECT._STROKE.Thickness = value
-            self.__OBJECT._STROKE.Enabled = not Properties.Filled
             self:__UPDATE_SCALE()
         elseif property == "Filled" then
-            self.__OBJECT._STROKE.Enabled = not value
             self.__OBJECT.BackgroundTransparency = value and 1 - Properties.Transparency or 1
         elseif property == "Transparency" then
             self.__OBJECT.Transparency = clamp(1 - value, 0, 1)
@@ -593,11 +582,11 @@ LPH_NO_VIRTUALIZE(function()
 
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
+        local Thickness = Properties.Thickness or 1
+        local Scale = floor(Thickness/2)
 
-        local Scale = floor((Properties.Thickness or 1)/2)
-
-        self.__OBJECT.Position = fromOffset(Properties.Position.X + Scale, Properties.Position.Y + Scale)
-        self.__OBJECT.Size = fromOffset(Properties.Size.X, Properties.Size.Y)
+        self.__OBJECT.Position = fromOffset(Properties.Position.X - Scale, Properties.Position.Y - Scale)
+        self.__OBJECT.Size = fromOffset(Properties.Size.X + Thickness, Properties.Size.Y + Thickness)
     end
 
     function Square:Remove()
