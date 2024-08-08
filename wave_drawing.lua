@@ -594,8 +594,8 @@ LPH_NO_VIRTUALIZE(function()
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
 
-        self.__OBJECT.Position = fromOffset(Properties.Position.X + Properties.Thickness, Properties.Position.Y + Properties.Thickness)
-        self.__OBJECT.Size = fromOffset(Properties.Size.X - Properties.Thickness * 2, Properties.Size.Y - Properties.Thickness * 2)
+        self.__OBJECT.Position = fromOffset(Properties.Position.X, Properties.Position.Y)
+        self.__OBJECT.Size = fromOffset(Properties.Size.X, Properties.Size.Y)
     end
 
     function Square:Remove()
