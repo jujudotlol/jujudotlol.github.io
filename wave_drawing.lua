@@ -143,7 +143,7 @@ LPH_NO_VIRTUALIZE(function()
         local center = (from + to) / 2
         local offset = to - from
         local a = floor(thickness/2)
-        object.Position = fromOffset(center.X - a, center.Y - a)
+        object.Position = fromOffset(center.X + a, center.Y + a)
         object.Size = fromOffset(offset.Magnitude, thickness)
         object.Rotation = atan2(offset.Y, offset.X) * 180 / pi
     end
