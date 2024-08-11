@@ -142,8 +142,8 @@ LPH_NO_VIRTUALIZE(function()
     function Drawing.UpdatePosition(object, from, to, thickness)
         local center = (from + to) / 2
         local offset = to - from
-
-        object.Position = fromOffset(center.X, center.Y)
+        local a = floor(thickness/2)
+        object.Position = fromOffset(center.X - a, center.Y - a)
         object.Size = fromOffset(offset.Magnitude, thickness)
         object.Rotation = atan2(offset.Y, offset.X) * 180 / pi
     end
