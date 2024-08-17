@@ -13,7 +13,7 @@ LPH_NO_VIRTUALIZE(function()
     end
 
     local env = getgenv and getgenv() or _G
-    local cloneref = function(v) return v end
+    local cloneref = cloneref or function(v) return v end
     local clonefunction = function(v) return v end
 
     -- // Variables
