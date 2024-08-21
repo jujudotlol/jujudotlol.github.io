@@ -1,7 +1,7 @@
 local is_solara = string.find(identifyexecutor(), "Solara")
 local games = is_solara and {
     [4348829796] = "https://api.luarmor.net/files/v3/loaders/ca362c86261381fdb860a6cf99f6ab0c.lua",
-    [1008451066] = "https://api.luarmor.net/files/v3/loaders/4749f2f291e3f60f34f3c8f1ef7ef33e.lua",
+    [1008451066] = "https://api.luarmor.net/files/v3/loaders/f6a815eb5fa24e03f6a21e00582072b1.lua",
 } or {
     [1008451066] = "https://api.luarmor.net/files/v3/loaders/f6a815eb5fa24e03f6a21e00582072b1.lua",
     [4348829796] = "https://api.luarmor.net/files/v3/loaders/83afa5fcd967550d4124c1ac22e66185.lua",
