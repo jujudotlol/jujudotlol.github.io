@@ -388,6 +388,7 @@ LPH_NO_VIRTUALIZE(function()
                 TextYAlignment = Enum.TextYAlignment.Top,
                 FontFace = Drawing.Font.Enums[1],
                 TextSize = 12,
+                BorderSizePixel = 0,
                 BackgroundTransparency = 1,
                 ZIndex = 0,
                 Visible = false,
