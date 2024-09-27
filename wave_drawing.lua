@@ -517,6 +517,7 @@ LPH_NO_VIRTUALIZE(function()
                 Transparency = 1,
                 ZIndex = 0,
                 Filled = false,
+                BorderSizePixel = 0,
                 Visible = false
             },
             __OBJECT = Drawing.CreateInstance("Frame", {
