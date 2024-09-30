@@ -389,6 +389,7 @@ LPH_NO_VIRTUALIZE(function()
                 FontFace = Drawing.Font.Enums[1],
                 TextSize = 12,
                 BackgroundTransparency = 1,
+                BorderSizePixel = 0,
                 ZIndex = 0,
                 Visible = false,
                 Parent = Drawing.__ROOT
