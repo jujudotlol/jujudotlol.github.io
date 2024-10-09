@@ -21,7 +21,7 @@ if game_id == 113491250 then
             break
         end
     end
-    run_on_actor(actor, game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua"))
+    run_on_actor(actor, `script_key = {script_key}; {game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua")})
     return
 end
 
