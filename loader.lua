@@ -20,10 +20,10 @@ if game_id == 113491250 then
         setfflag("DebugRunParallelLuaOnMainThread", true)
         queue_on_teleport(`task.wait(5)\n script_key = "{script_key}"\n loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua"))()`)
         game:GetService("TeleportService"):Teleport(game.PlaceId)
-        return
     else
         loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua"))()
     end
+    return
 end
 
 loadstring(game:HttpGet(games[game_id] or "https://api.luarmor.net/files/v3/loaders/e7b8ab8480015787078f991bc7523cb6.lua"))()
