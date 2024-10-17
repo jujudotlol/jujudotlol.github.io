@@ -15,7 +15,7 @@ end
 
 if game_id == 113491250 then
     local fflag = getfflag("DebugRunParallelLuaOnMainThread") 
-    if not fflag or fflag ~= "false" then
+    if not fflag or fflag == "false" then
         game:GetService("Players").LocalPlayer:Kick("juju > rejoining server! the script will execute afterwards :)")
         setfflag("DebugRunParallelLuaOnMainThread", true)
         queue_on_teleport(`task.wait(5)\n script_key = "{script_key}"\n loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua"))()`)
