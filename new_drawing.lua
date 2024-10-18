@@ -79,7 +79,7 @@ x=Font.new(v,Enum.FontWeight.Regular)
 else
 local y=e:GenerateGUID(false)
 
-if not isfile(`FontData`)then
+if not isfile(FontData)then
 writefile(`DrawingFontCache/{u}.ttf`,crypt.base64.decode(v))
 v=`DrawingFontCache/{u}.ttf`
 end
