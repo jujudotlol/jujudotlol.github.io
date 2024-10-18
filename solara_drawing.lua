@@ -79,7 +79,7 @@ LPH_NO_VIRTUALIZE(function()
         else
             local TempPath = HttpService:GenerateGUID(false)
 
-            if not isfile(`DrawingFontCache/{FontName}.ttf`) then
+            if not isfile(FontData) then
                 writefile(`DrawingFontCache/{FontName}.ttf`, crypt.base64.decode(FontData))
                 FontData = `DrawingFontCache/{FontName}.ttf`
             end
