@@ -14,11 +14,14 @@ if is_solara then
 end
 
 if game_id == 113491250 then
+    if not getfflag then
+        getfflag = function() return false end
+    end
     local fflag = getfflag("DebugRunParallelLuaOnMainThread") 
     if not fflag or fflag == "false" then
         game:GetService("Players").LocalPlayer:Kick("juju > rejoining server! the script will execute afterwards :)")
         setfflag("DebugRunParallelLuaOnMainThread", "true")
-        queue_on_teleport(`repeat task.wait() until game:IsLoaded(); task.wait(2.5)\n script_key = "{script_key}"\n loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua"))()`)
+        queue_on_teleport(`repeat task.wait() until game:IsLoaded(); task.wait(2.5)\n script_key = "{script_key}"\n if not getfflag then getgenv().getfflag = function() return true end end\n loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/02f0f396b66a5e40edcee7552d8c24a6.lua"))()`)
         task.wait(1)
         game:GetService("TeleportService"):Teleport(game.PlaceId)
     else
