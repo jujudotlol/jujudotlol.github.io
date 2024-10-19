@@ -437,7 +437,7 @@ LPH_NO_VIRTUALIZE(function()
         elseif property == "Position" then
             self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Size" then
-            self.__OBJECT.TextSize = value - 1
+            self.__OBJECT.TextSize = value
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Text" then
             self.__OBJECT.Text = value
