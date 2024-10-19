@@ -106,10 +106,10 @@ LPH_NO_VIRTUALIZE(function()
         end
 
         local TextBoundParams = Drawing.__TEXT_BOUND_PARAMS
-        TextBoundParamsText = "Text"
-        TextBoundParamsSize = 12
-        TextBoundParamsFont = FontObject
-        TextBoundParamsWidth = huge
+        TextBoundParams.Text = "Text"
+        TextBoundParams.Size = 12
+        TextBoundParams.Font = FontObject
+        TextBoundParams.Width = huge
 
         GetTextBoundsAsync(TextService, Drawing.__TEXT_BOUND_PARAMS) -- Preload/Cache font for GetTextBoundsAsync to avoid yielding across metamethods
 
@@ -477,10 +477,10 @@ LPH_NO_VIRTUALIZE(function()
         local Properties = self.__PROPERTIES
         local TextBoundParams = Drawing.__TEXT_BOUND_PARAMS
 
-        TextBoundParamsText = Properties.Text
-        TextBoundParamsSize = Properties.Size
-        TextBoundParamsFont = Properties.Font
-        TextBoundParamsWidth = huge
+        TextBoundParams.Text = Properties.Text
+        TextBoundParams.Size = Properties.Size
+        TextBoundParams.Font = Properties.Font
+        TextBoundParams.Width = huge
 
         Properties.TextBounds = GetTextBoundsAsync(TextService, Drawing.__TEXT_BOUND_PARAMS)
     end
@@ -558,7 +558,6 @@ LPH_NO_VIRTUALIZE(function()
             self.__OBJECT.BackgroundColor3 = value
             self.__OBJECT._STROKE.Color = value
         elseif property == "Position" then
-            print(self.__UPDATE_SCALE)
             self:__UPDATE_SCALE()
         elseif property == "Size" then
             self:__UPDATE_SCALE()
