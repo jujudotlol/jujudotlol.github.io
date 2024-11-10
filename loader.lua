@@ -2,9 +2,9 @@ local is_solara = string.find(identifyexecutor(), "Solara")
 local game_id = game.GameId
 
 local games = is_solara and {
-    [1008451066] = "https://api.luarmor.net/files/v3/loaders/f6a815eb5fa24e03f6a21e00582072b1.lua"
+    [1008451066] = "https://juju.lol/kick.lua"
 } or {
-    [1008451066] = "https://api.luarmor.net/files/v3/loaders/f6a815eb5fa24e03f6a21e00582072b1.lua"
+    [1008451066] = "https://juju.lol/kick.lua"
 }
 
 if is_solara then
