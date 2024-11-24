@@ -13,14 +13,13 @@ LPH_NO_VIRTUALIZE(function()
     end
 
     local env = getgenv and getgenv() or _G
-    local cloneref = cloneref or function(v) return v end
+    local cloneref = function(v) return v end
     local clonefunction = function(v) return v end
 
     -- // Variables
     local TextService = cloneref(game:GetService("TextService"))
     local HttpService = cloneref(game:GetService("HttpService"))
 
-    local HttpGet = clonefunction(game.HttpGet)
     local GetTextBoundsAsync = clonefunction(TextService.GetTextBoundsAsync)
 
     local floor = clonefunction(math.floor)
@@ -706,7 +705,7 @@ LPH_NO_VIRTUALIZE(function()
     function Image:__SET_IMAGE(data, isUri)
         task.spawn(function()
             if isUri then
-                data = HttpGet(game, data, true)
+                data = game:HttpGet(data, true)
             end
 
             if not Drawing.__IMAGE_CACHE[data] then
